@@ -1,4 +1,4 @@
-# the_market
+# The Market
 
 # Flutter Marketplace
 
