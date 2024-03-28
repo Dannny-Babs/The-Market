@@ -1,0 +1,1 @@
+export 'package:the_market/interface/home_screen.dart';

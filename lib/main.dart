@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:the_market/bloc/store_bloc.dart';
+import 'package:the_market/data/routes.dart';
+import 'package:the_market/utils/packages.dart';
+import 'package:the_market/utils/screens.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(BlocProvider(
+    create: (context) => StoreBloc(),
+    child: const MainApp(),
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -9,12 +15,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: GoogleFonts.inter().fontFamily,
+        textTheme: GoogleFonts.interTextTheme(),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
+            .copyWith(primary: AppColors.primary)
+            .copyWith(background: AppColors.light),
       ),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      home: const HomeScreen()
     );
   }
 }
