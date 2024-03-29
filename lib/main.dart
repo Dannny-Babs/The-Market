@@ -18,8 +18,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: GoogleFonts.inter().fontFamily,
-        textTheme: GoogleFonts.interTextTheme(),
+        fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
+        textTheme: GoogleFonts.plusJakartaSansTextTheme(),
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
             .copyWith(primary: AppColors.primary)
             .copyWith(background: AppColors.light),

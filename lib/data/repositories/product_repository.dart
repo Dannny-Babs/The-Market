@@ -19,7 +19,7 @@ class ProductRepository {
   }
 
   Future<List<Product>> showProduct() async {
-    final response = await _dio.get('https://fakestoreapi.com/products');
+    final response = await _dio.get('https://dummyjson.com/products');
     return (response.data as List)
         .map((Json) => Product(
             id: Json['id'],
@@ -36,7 +36,3 @@ class ProductRepository {
         .toList();
   }
 }
-
-
-
-
