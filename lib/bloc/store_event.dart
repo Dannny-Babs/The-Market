@@ -7,6 +7,15 @@ class ProductRequested extends StoreEvent {
   const ProductRequested();
 }
 
+class CategoryRequested extends StoreEvent {
+  const CategoryRequested();
+}
+
+class CategoryProductRequested extends StoreEvent {
+  String categoryName;
+
+   CategoryProductRequested(this.categoryName);
+}
 class ProductAddedToCart extends StoreEvent {
   final int productId;
 
@@ -22,8 +31,6 @@ class ProductRemovedFromCart extends StoreEvent {
 class CartCleared extends StoreEvent {
   const CartCleared();
 }
-
-
 
 class FavoriteToggled extends StoreEvent {
   final int productId;

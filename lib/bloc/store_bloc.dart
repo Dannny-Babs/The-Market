@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:the_market/data/repositories/category_repository.dart';
 import 'package:the_market/data/repositories/product_repository.dart';
 import 'package:the_market/utils/bloc.dart';
-
-
 
 class StoreBloc extends Bloc<StoreEvent, StoreState> {
   StoreBloc() : super(const StoreState()) {
     on<ProductRequested>(_handleProductRequested);
+    on<CategoryRequested>(_handleCategoryRequested);
+    on<CategoryProductRequested>(_handleCategoryProductRequested);
     on<ProductAddedToCart>(_handleProductAddedToCart);
     on<ProductRemovedFromCart>(_handleProductRemovedFromCart);
     on<CartCleared>(_handleCartCleared);
@@ -15,6 +16,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
   }
 
   final ProductRepository api = ProductRepository();
+  final CategoryRepository categoryApi = CategoryRepository();
 
   Future<void> _handleProductRequested(
     ProductRequested event,
@@ -25,7 +27,36 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       final products = await api.getProducts();
       emit(state.copyWith(
         productStatus: StoreRequest.success,
-        products: products, 
+        products: products,
+      ));
+    } catch (e) {
+      emit(state.copyWith(productStatus: StoreRequest.error));
+    }
+  }
+
+  Future<void> _handleCategoryRequested(
+    CategoryRequested event,
+    Emitter<StoreState> emit,
+  ) async {
+    emit(state.copyWith(productStatus: StoreRequest.loading));
+    try {
+      final categories = await categoryApi.getCategories();
+      emit(state.copyWith(categories: categories));
+    } catch (e) {
+      emit(state.copyWith(productStatus: StoreRequest.error));
+    }
+  }
+
+  Future<void> _handleCategoryProductRequested(
+    CategoryProductRequested event,
+    Emitter<StoreState> emit,
+  ) async {
+    emit(state.copyWith(productStatus: StoreRequest.loading));
+    try {
+      final categories = await categoryApi.showCategories(event.categoryName);
+      emit(state.copyWith(
+        productStatus: StoreRequest.success,
+        products: categories,
       ));
     } catch (e) {
       emit(state.copyWith(productStatus: StoreRequest.error));
@@ -36,36 +67,35 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     ProductAddedToCart event,
     Emitter<StoreState> emit,
   ) async {
-      emit(state.copyWith(cartIds: {...state.cartIds, event.productId} ));
+    emit(state.copyWith(cartIds: {...state.cartIds, event.productId}));
   }
 
   Future<void> _handleProductRemovedFromCart(
     ProductRemovedFromCart event,
     Emitter<StoreState> emit,
   ) async {
-      emit(state.copyWith(cartIds: {...state.cartIds}..remove(event.productId)));
+    emit(state.copyWith(cartIds: {...state.cartIds}..remove(event.productId)));
   }
 
   Future<void> _handleCartCleared(
     CartCleared event,
     Emitter<StoreState> emit,
   ) async {
-      emit(state.copyWith(cartIds: {}));
+    emit(state.copyWith(cartIds: {}));
   }
 
   Future<void> _handleProductAddedToFavorite(
     FavoriteRemoved event,
     Emitter<StoreState> emit,
   ) async {
-      emit(state.copyWith(favoriteIds: {...state.favoriteIds, event.productId} ));
+    emit(state.copyWith(favoriteIds: {...state.favoriteIds, event.productId}));
   }
 
   Future<void> _handleProductRemovedFromFavorite(
     FavoriteToggled event,
     Emitter<StoreState> emit,
   ) async {
-      emit(state.copyWith(favoriteIds: {...state.favoriteIds}..remove(event.productId)));
+    emit(state.copyWith(
+        favoriteIds: {...state.favoriteIds}..remove(event.productId)));
   }
-
-
 }

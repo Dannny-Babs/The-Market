@@ -130,10 +130,8 @@ class CategoriesListWidget extends StatelessWidget {
       'All',
       "Smartphones",
       "Laptops",
-      "Fragrances",
       "Skincare",
       "Groceries",
-      "Home-decoration",
       "Furniture",
       "Tops",
     ];
@@ -167,7 +165,7 @@ class CategoriesListWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               bool isSelected = false;
               return Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.only(right: 8),
                 child: Column(
                   children: [
                     GestureDetector(

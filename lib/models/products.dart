@@ -11,7 +11,7 @@ class Products {
     required this.title,
     required this.price,
     required this.image,
-    this.id = 0,
+    required this.id,
     this.rating = 4.5,
   });
 
