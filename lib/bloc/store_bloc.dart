@@ -4,8 +4,9 @@ import 'package:the_market/data/repositories/product_repository.dart';
 import 'package:the_market/utils/bloc.dart';
 
 class StoreBloc extends Bloc<StoreEvent, StoreState> {
-  StoreBloc() : super(const StoreState( tabIndex: 0)) {
+  StoreBloc() : super(const StoreState(tabIndex: 0)) {
     on<ProductRequested>(_handleProductRequested);
+
     on<TabChanged>(_handleTabChanged);
     on<CategoryRequested>(_handleCategoryRequested);
     on<CategoryProductRequested>(_handleCategoryProductRequested);
@@ -25,13 +26,14 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
   ) async {
     emit(state.copyWith(productStatus: StoreRequest.loading));
     try {
-      final products = await api.getProducts();
-
+      final product = await api.showProduct(event.productId);
       emit(state.copyWith(
         productStatus: StoreRequest.success,
-        products: products,
+        product: product,
       ));
+      print(product);
     } catch (e) {
+      print(e);
       emit(state.copyWith(productStatus: StoreRequest.error));
     }
   }
@@ -56,7 +58,6 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     emit(state.copyWith(productStatus: StoreRequest.loading));
     try {
       final categories = await categoryApi.showCategories(event.categoryName);
-      
       emit(state.copyWith(
         productStatus: StoreRequest.success,
         products: categories,
@@ -109,4 +110,3 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     emit(state.copyWith(tabIndex: event.index));
   }
 }
-

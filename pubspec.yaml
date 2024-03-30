@@ -15,7 +15,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   google_fonts: 6.1.0
   ionicons: ^0.2.2
-  solar_icons: ^0.0.1
+  solar_icons: ^0.0.5
   meta: ^1.9.1
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0

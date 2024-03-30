@@ -1,19 +1,23 @@
-
 abstract class StoreEvent {
   const StoreEvent();
 }
 
-class ProductRequested extends StoreEvent {  
+class ProductRequested extends StoreEvent {
+  final int productId;
+
+  const ProductRequested(this.productId);
 }
 
 class CategoryRequested extends StoreEvent {
+  const CategoryRequested();
 }
 
 class CategoryProductRequested extends StoreEvent {
   String categoryName;
-  
+
   CategoryProductRequested(this.categoryName);
 }
+
 class ProductAddedToCart extends StoreEvent {
   final int productId;
 
@@ -47,7 +51,3 @@ class TabChanged extends StoreEvent {
 
   const TabChanged(this.index);
 }
-
-
-
-

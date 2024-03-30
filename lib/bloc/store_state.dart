@@ -8,7 +8,7 @@ class StoreState {
     this.products = const [],
     this.product = const [],
     this.categories = const [],
-    required this.tabIndex,
+    required this.tabIndex ,
     this.cartIds = const {},
     this.favoriteIds = const {},
   });

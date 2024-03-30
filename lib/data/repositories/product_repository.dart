@@ -33,8 +33,8 @@ class ProductRepository {
     }
   }
 
-  Future<List<Product>> showProduct() async {
-    final response = await _dio.get('https://dummyjson.com/products');
+  Future<List<Product>> showProduct(id) async {
+    final response = await _dio.get('https://dummyjson.com/products/$id');
 
     // Check for successful response
     if (response.statusCode == 200) {
