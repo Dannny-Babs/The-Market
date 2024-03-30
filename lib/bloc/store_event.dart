@@ -42,6 +42,12 @@ class FavoriteRemoved extends StoreEvent {
   const FavoriteRemoved(this.productId);
 }
 
+class TabChanged extends StoreEvent {
+  final int index;
+
+  const TabChanged(this.index);
+}
+
 
 
 

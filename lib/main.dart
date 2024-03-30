@@ -1,7 +1,7 @@
 import 'package:the_market/bloc/store_bloc.dart';
 import 'package:the_market/data/routes.dart';
+import 'package:the_market/utils/navigation_tab.dart';
 import 'package:the_market/utils/packages.dart';
-import 'package:the_market/utils/screens.dart';
 
 void main() {
   runApp(BlocProvider(
@@ -16,17 +16,16 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
-        textTheme: GoogleFonts.plusJakartaSansTextTheme(),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
-            .copyWith(primary: AppColors.primary)
-            .copyWith(background: AppColors.light),
-      ),
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
-      home: const HomeScreen()
-    );
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
+          textTheme: GoogleFonts.plusJakartaSansTextTheme(),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
+              .copyWith(primary: AppColors.primary)
+              .copyWith(background: AppColors.light),
+        ),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator().generateRoute,
+        home: const BottomTabBar());
   }
 }

@@ -2,6 +2,8 @@ import 'package:the_market/models/products.dart';
 import 'package:the_market/utils/bloc.dart';
 import 'package:the_market/utils/packages.dart';
 
+import 'product_screen.dart';
+
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
@@ -15,6 +17,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
     super.initState();
     // Dispatch an event here to fetch initial products based on the selected category
     context.read<StoreBloc>().add(CategoryProductRequested(selectedCategory));
+
+    context.read<StoreBloc>().add(ProductRequested());
   }
 
   @override
@@ -98,9 +102,6 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
                       StoreBloc()
                           .add(CategoryProductRequested(selectedCategory));
                     });
-                    selectedCategory = categories[index];
-                    CategoryProductRequested(selectedCategory);
-                    StoreBloc().add(CategoryProductRequested(selectedCategory));
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12),
@@ -132,8 +133,7 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
         const SizedBox(height: 20),
         BlocBuilder<StoreBloc, StoreState>(
           builder: (context, state) {
-            if (state.productStatus == StoreRequest.loading ||
-                selectedCategory != 'All') {
+            if (state.productStatus == StoreRequest.loading) {
               return GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -151,8 +151,7 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
                 },
               );
             }
-            if (state.productStatus == StoreRequest.error ||
-                selectedCategory != 'All') {
+            if (state.productStatus == StoreRequest.error) {
               return Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
@@ -186,37 +185,15 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
                 ),
               );
             }
-            if (state.productStatus == StoreRequest.unknown ||
-                selectedCategory != 'All') {
+            if (state.productStatus == StoreRequest.unknown) {
               selectedCategory == 'All'
                   ? context.read<StoreBloc>().add(ProductRequested())
                   : context
                       .read<StoreBloc>()
                       .add(CategoryProductRequested(selectedCategory));
             }
-            if (selectedCategory != 'All') {
-              return GridView.builder(
-                key: Key(selectedCategory),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:
-                        MediaQuery.of(context).size.width > 600 ? 4 : 2,
-                    crossAxisSpacing: 20,
-                    childAspectRatio:
-                        MediaQuery.of(context).size.width > 600 ? 0.7 : 0.73),
-                itemCount: state.products.length,
-                itemBuilder: (context, index) {
-                  Products product = state.products[index];
-                  return ProductCard(
-                    product: product,
-                    onPressed: () {},
-                  );
-                },
-              );
-            }
+
             return GridView.builder(
-              key: Key(selectedCategory),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -230,7 +207,16 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
                 Products product = state.products[index];
                 return ProductCard(
                   product: product,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductScreen(
+                          productID: product.id,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );

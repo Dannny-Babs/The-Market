@@ -1,5 +1,7 @@
 // This file contains the model class for the product. It has the properties name, description, price, and image. It also has a factory constructor to convert the JSON data to a Product object.
 
+import 'dart:convert';
+
 class Products {
   final String title;
   final int price;
@@ -26,6 +28,7 @@ class Products {
   }
 }
 
+
 class Product {
   int id;
   String title;
@@ -37,7 +40,7 @@ class Product {
   String brand;
   String category;
   String thumbnail;
-  // Map<String> images;
+  List<String> images;
 
   Product({
     required this.id,
@@ -50,23 +53,38 @@ class Product {
     required this.brand,
     required this.category,
     required this.thumbnail,
-    // required this.images,
+    required this.images,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      title: json['title'],
-      description: json['description'],
-      price: json['price'],
-      id: json['id'],
-      rating: json['rating'],
-      stock: json['stock'],
-      brand: json['brand'],
-      category: json['category'],
-      thumbnail: json['thumbnail'],
-      discountPercentage: json['discountPercentage'],
-      /* images:
-          List<String>.from((json['images'] as List).map((x) => x.toString()),),*/
-    );
-  }
+  factory Product.fromRawJson(String str) => Product.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        price: json["price"],
+        discountPercentage: json["discountPercentage"]?.toDouble(),
+        rating: json["rating"]?.toDouble(),
+        stock: json["stock"],
+        brand: json["brand"],
+        category: json["category"],
+        thumbnail: json["thumbnail"],
+        images: List<String>.from(json["images"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "price": price,
+        "discountPercentage": discountPercentage,
+        "rating": rating,
+        "stock": stock,
+        "brand": brand,
+        "category": category,
+        "thumbnail": thumbnail,
+        "images": List<dynamic>.from(images.map((x) => x)),
+      };
 }

@@ -253,7 +253,7 @@ class ProductCard extends StatelessWidget {
           const SizedBox(height: 5),
           TextWidget(
             text: '\$${product.price}',
-            size: 24,
+            size: 22,
             fontWeight: FontWeight.w600,
           ),
         ],

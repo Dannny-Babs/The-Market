@@ -35,24 +35,19 @@ class ProductRepository {
 
   Future<List<Product>> showProduct() async {
     final response = await _dio.get('https://dummyjson.com/products');
-    return (response.data as List)
-        .map(
-          (Json) => Product(
-            id: Json['id'],
-            title: Json['title'],
-            description: Json['description'],
-            price: Json['price'],
-            discountPercentage: Json['discountPercentage'],
-            rating: Json['rating'],
-            stock: Json['stock'],
-            brand: Json['brand'],
-            category: Json['category'],
-            thumbnail: Json['thumbnail'],
-            /* images: List<String>.from(
-              Json['images'],
-            ),*/
-          ),
-        )
-        .toList();
+
+    // Check for successful response
+    if (response.statusCode == 200) {
+      // Parse the JSON data
+      final List jsonProducts = response.data as List;
+
+      // Convert each JSON object to a Product object
+      return jsonProducts
+          .map((jsonProduct) => Product.fromJson(jsonProduct))
+          .toList();
+    } else {
+      // Handle error based on response code
+      throw Exception('Failed to load products: ${response.statusCode}');
+    }
   }
 }
