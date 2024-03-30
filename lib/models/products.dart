@@ -2,12 +2,12 @@
 
 class Products {
   final String title;
-  final double price;
+  final int price;
   final String image;
   final int id;
   final double rating;
 
- const Products({
+  const Products({
     required this.title,
     required this.price,
     required this.image,
@@ -23,44 +23,41 @@ class Products {
       id: json['id'],
       rating: json['rating'],
     );
-  } 
+  }
 }
 
 class Product {
-     int id;
-    String title;
-    String description;
-    int price;
-    double discountPercentage;
-    double rating;
-    int stock;
-    String brand;
-    String category;
-    String thumbnail;
-    List<String> images;
+  int id;
+  String title;
+  String description;
+  int price;
+  double discountPercentage;
+  double rating;
+  int stock;
+  String brand;
+  String category;
+  String thumbnail;
+  // Map<String> images;
 
-    Product({
-        required this.id,
-        required this.title,
-        required this.description,
-        required this.price,
-        required this.discountPercentage,
-        required this.rating,
-        required this.stock,
-        required this.brand,
-        required this.category,
-        required this.thumbnail,
-        required this.images,
-    });
-
-
+  Product({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.discountPercentage,
+    required this.rating,
+    required this.stock,
+    required this.brand,
+    required this.category,
+    required this.thumbnail,
+    // required this.images,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       title: json['title'],
       description: json['description'],
       price: json['price'],
-      images: json['images'],
       id: json['id'],
       rating: json['rating'],
       stock: json['stock'],
@@ -68,7 +65,8 @@ class Product {
       category: json['category'],
       thumbnail: json['thumbnail'],
       discountPercentage: json['discountPercentage'],
+      /* images:
+          List<String>.from((json['images'] as List).map((x) => x.toString()),),*/
     );
-  }  
-
+  }
 }

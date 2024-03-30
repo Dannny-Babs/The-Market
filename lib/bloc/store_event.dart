@@ -3,18 +3,16 @@ abstract class StoreEvent {
   const StoreEvent();
 }
 
-class ProductRequested extends StoreEvent {
-  const ProductRequested();
+class ProductRequested extends StoreEvent {  
 }
 
 class CategoryRequested extends StoreEvent {
-  const CategoryRequested();
 }
 
 class CategoryProductRequested extends StoreEvent {
   String categoryName;
-
-   CategoryProductRequested(this.categoryName);
+  
+  CategoryProductRequested(this.categoryName);
 }
 class ProductAddedToCart extends StoreEvent {
   final int productId;

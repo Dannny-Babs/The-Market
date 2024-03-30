@@ -7,3 +7,4 @@ export 'colors.dart';
 export 'package:dio/dio.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:the_market/utils/widget.dart';
+export 'package:shimmer/shimmer.dart';

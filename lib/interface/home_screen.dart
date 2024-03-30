@@ -1,3 +1,4 @@
+import 'package:the_market/interface/product_views.dart';
 import 'package:the_market/utils/packages.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -34,23 +35,26 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: AppColors.light,
           elevation: 0.0,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              FadeInUp(
-                animate: true,
-                child: SearchBarWidget(
-                  hintText: 'Search',
-                  onChanged: (value) {},
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FadeInUp(
+                  animate: true,
+                  child: SearchBarWidget(
+                    hintText: 'Search',
+                    onChanged: (value) {},
+                  ),
                 ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.035),
-              const AnnouncementCardWidget(),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-              FadeInUp(animate: true, child: const CategoriesListWidget()),
-            ],
+                SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                const AnnouncementCardWidget(),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                FadeInUp(animate: true, child: const ProductsScreen()),
+               
+              ],
+            ),
           ),
         ));
   }
@@ -113,89 +117,6 @@ class AnnouncementCardWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.83,
           ),
         )
-      ],
-    );
-  }
-}
-
-//Categories List Widget
-class CategoriesListWidget extends StatelessWidget {
-  const CategoriesListWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<String> categories = [
-      'All',
-      "Smartphones",
-      "Laptops",
-      "Skincare",
-      "Groceries",
-      "Furniture",
-      "Tops",
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextWidget(
-              text: 'Categories',
-              color: AppColors.dark,
-              fontWeight: FontWeight.w700,
-              size: 20,
-            ),
-            TextWidget(
-              text: 'See all',
-              color: AppColors.primary,
-              fontWeight: FontWeight.w600,
-              size: 16,
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          height: 50,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: categories.length,
-            itemBuilder: (context, index) {
-              bool isSelected = false;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        isSelected = !isSelected;
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color:
-                              isSelected ? AppColors.primary : AppColors.light,
-                          border: isSelected
-                              ? Border.all(width: 0)
-                              : Border.all(color: AppColors.dark),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: TextWidget(
-                          text: categories[index],
-                          color: AppColors.dark,
-                          fontWeight: FontWeight.w600,
-                          size: 16.5,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
       ],
     );
   }
