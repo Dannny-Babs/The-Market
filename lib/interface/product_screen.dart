@@ -88,6 +88,22 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 }
 
+SnackBar _buildSnackBar(String message) {
+  return SnackBar(
+    clipBehavior: Clip.hardEdge,
+    margin: const EdgeInsets.all(10),
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    content: TextWidget(
+      text: message,
+      color: AppColors.light,
+    ),
+    backgroundColor: AppColors.dark,
+  );
+}
+
 Widget buildProductScreen(bool inCart, bool inFavorite) {
   return BlocBuilder<StoreBloc, StoreState>(
     builder: (context, state) {
@@ -105,8 +121,8 @@ Widget buildProductScreen(bool inCart, bool inFavorite) {
             child: TextWidget(
               text: 'Product Details',
               color: AppColors.dark,
-              size: 24,
-              fontWeight: FontWeight.bold,
+              size: 22,
+              fontWeight: FontWeight.w600,
             ),
           ),
           actions: [
@@ -119,20 +135,10 @@ Widget buildProductScreen(bool inCart, bool inFavorite) {
                     );
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    clipBehavior: Clip.hardEdge,
-                    margin: const EdgeInsets.all(10),
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    content: TextWidget(
-                      text: inFavorite
-                          ? 'Removed from favorites'
-                          : 'Added to favorites',
-                      color: AppColors.light,
-                    ),
-                    backgroundColor: AppColors.dark,
+                  _buildSnackBar(
+                    inFavorite
+                        ? 'Product removed from favorites'
+                        : 'Product added to favorites',
                   ),
                 );
               },
@@ -158,94 +164,112 @@ Widget buildProductScreen(bool inCart, bool inFavorite) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          product.thumbnail,
-                          height: 300,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: AppColors.grey,
+                            width: 1,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            product.thumbnail,
+                            height: 300,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),
-                      ListView.builder(itemCount:product.images.length, scrollDirection: Axis.horizontal, itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              product.images[index],
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      }),
+                      SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                            itemCount: product.images.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: AppColors.grey,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      product.images[index],
+                                      height: 100,
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                      const SizedBox(height: 10),
                       TextWidget(
                           text: product.title,
                           color: AppColors.dark,
-                          size: 24,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                          size: 28,
                           fontWeight: FontWeight.bold),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 5),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.star,
-                            color: AppColors.primary,
+                          const TextWidget(
+                            text: 'Category: ',
+                            size: 15.5,
+                            color: AppColors.dark,
                           ),
                           TextWidget(
-                            text: product.rating.toString(),
-                            size: 20,
-                            color: AppColors.dark,
+                            text: product.category[0].toUpperCase() +
+                                product.category.substring(1),
+                            size: 16,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
                           ),
                         ],
                       ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          productdetailinfo(
+                            product.rating.toString(),
+                            const Icon(EneftyIcons.star_bold,
+                                color: Color(0xFFE8BE05), size: 20),
+                          ),
+                          const SizedBox(width: 10),
+                          productdetailinfo(
+                            product.stock.toString(),
+                            const Icon(EneftyIcons.box_outline,
+                                color: AppColors.primary, size: 20),
+                          ),
+                          const SizedBox(width: 10),
+                          productdetailinfo(
+                            product.brand,
+                            const Icon(EneftyIcons.a_3_square_bold,
+                                color: Color(0xFF2C04CD), size: 20),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
                       TextWidget(
                           text: product.description,
                           size: 17.5,
-                          maxLines: 3,
-                          color: Color(0xFF717171)),
+                          maxLines: 6,
+                          color: const Color(0xFF717171)),
                       const SizedBox(height: 10),
-                      TextWidget(
-                        text: '\$${product.price}',
-                        size: 17.5,
-                        color: AppColors.dark,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: AppColors.primary,
-                          ),
-                          TextWidget(
-                            text: product.rating.toString(),
-                            size: 20,
-                            color: AppColors.dark,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      ButtonWidget(
-                        text: 'Add to Cart',
-                        onPressed: () {
-                          context
-                              .read<StoreBloc>()
-                              .add(ProductAddedToCart(product.id));
-
-                          if (!inCart) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Product added to cart'),
-                              ),
-                            );
-                          }
-                        },
-                        color: AppColors.primary,
-                        textColor: AppColors.light,
-                      ),
                     ],
                   ),
                 ),
@@ -253,109 +277,61 @@ Widget buildProductScreen(bool inCart, bool inFavorite) {
             ),
           ],
         ),
+        bottomSheet: Container(
+          height: 80,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              top: BorderSide(
+                color: AppColors.grey,
+                width: 1,
+              ),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextWidget(
+                    text: 'Price:',
+                    size: 16,
+                    color: AppColors.dark,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  TextWidget(
+                    text: '\$${product.price}',
+                    size: 30,
+                    color: AppColors.dark,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+              const SizedBox(width: 20),
+              ButtonWidget(
+                width: 0.63,
+                text: 'Add to Cart',
+                fontWeight: FontWeight.w600,
+                onPressed: () {
+                  context.read<StoreBloc>().add(ProductAddedToCart(product.id));
+
+                  if (!inCart) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(_buildSnackBar('Product added to cart'));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        _buildSnackBar('Product already in cart'));
+                  }
+                },
+                color: AppColors.primary,
+                textColor: AppColors.light,
+              ),
+            ],
+          ),
+        ),
       );
     },
   );
 }
-
-/*
-Scaffold(
-            backgroundColor: Colors.white,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Image.network(
-                      product.thumbnail,
-                      height: 300,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned(
-                      top: 20,
-                      left: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      top: 20,
-                      right: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.favorite_border),
-                        onPressed: () {
-                          context
-                              .read<StoreBloc>()
-                              .add(FavoriteToggled(product.id));
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextWidget(
-                        text: product.title,
-                        size: 24,
-                        color: AppColors.dark,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      const SizedBox(height: 10),
-                      TextWidget(
-                        text: product.description,
-                        size: 20,
-                        color: AppColors.dark,
-                      ),
-                      const SizedBox(height: 10),
-                      TextWidget(
-                        text: '\$${product.price}',
-                        size: 20,
-                        color: AppColors.dark,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: AppColors.primary,
-                          ),
-                          TextWidget(
-                            text: product.rating.toString(),
-                            size: 20,
-                            color: AppColors.dark,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      ButtonWidget(
-                        text: 'Add to Cart',
-                        onPressed: () {
-                          context
-                              .read<StoreBloc>()
-                              .add(ProductAddedToCart(product.id));
-
-                          if (!inCart) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Product added to cart'),
-                              ),
-                            );
-                          }
-                        },
-                        color: AppColors.primary,
-                        textColor: AppColors.light,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );*/

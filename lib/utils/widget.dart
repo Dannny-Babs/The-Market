@@ -94,6 +94,7 @@ class ButtonWidget extends StatelessWidget {
       this.textColor = AppColors.light,
       this.size = 20,
       this.fontWeight = FontWeight.w500,
+      this.width=  0.8,
       this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       this.borderRadius = 16});
 
@@ -104,6 +105,7 @@ class ButtonWidget extends StatelessWidget {
   final double size;
   final FontWeight fontWeight;
   final EdgeInsets padding;
+  final double width;
   final double borderRadius;
 
   @override
@@ -112,7 +114,7 @@ class ButtonWidget extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: padding,
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: color,
@@ -261,4 +263,33 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget productdetailinfo(String detail, Icon icon) {
+  return Container(
+    padding: const EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: AppColors.grey,
+        width: 1,
+      ),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(20),
+      ),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        icon,
+        const SizedBox(width: 8),
+        TextWidget(
+          text: detail,
+          size: 17,
+          fontWeight: FontWeight.w600,
+          color: AppColors.dark,
+        ),
+      ],
+    ),
+  );
 }
