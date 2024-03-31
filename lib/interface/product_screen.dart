@@ -168,20 +168,48 @@ Widget buildProductScreen(bool inCart, bool inFavorite) {
                         ),
                       ),
                       const SizedBox(height: 20),
+                      ListView.builder(itemCount:product.images.length, scrollDirection: Axis.horizontal, itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              product.images[index],
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      }),
                       TextWidget(
                           text: product.title,
                           color: AppColors.dark,
                           size: 24,
                           fontWeight: FontWeight.bold),
-                      TextWidget(
-                        text: product.description,
-                        size: 20,
-                        color: AppColors.dark,
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: AppColors.primary,
+                          ),
+                          TextWidget(
+                            text: product.rating.toString(),
+                            size: 20,
+                            color: AppColors.dark,
+                          ),
+                        ],
                       ),
+                      TextWidget(
+                          text: product.description,
+                          size: 17.5,
+                          maxLines: 3,
+                          color: Color(0xFF717171)),
                       const SizedBox(height: 10),
                       TextWidget(
                         text: '\$${product.price}',
-                        size: 20,
+                        size: 17.5,
                         color: AppColors.dark,
                         fontWeight: FontWeight.bold,
                       ),
