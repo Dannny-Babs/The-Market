@@ -1,6 +1,5 @@
-import 'package:the_market/interface/favorite_screen.dart';
-import 'package:the_market/interface/home_screen.dart';
 import 'package:the_market/utils/bloc.dart';
+import 'package:the_market/utils/screens.dart';
 import '../utils/packages.dart';
 
 List<BottomNavigationBarItem> bottomNavBarItems = const [
@@ -28,10 +27,10 @@ List<BottomNavigationBarItem> bottomNavBarItems = const [
 
 const List<Widget> bottomNavBarScreens = [
   HomeScreen(),
-  Text('Search'),
+  SearchScreen(),
   FavoriteScreen(),
   Text('Profile'),
-  //SearchScreen(),
+
   // ProfileScreen(),
 ];
 

@@ -6,8 +6,10 @@ import 'package:the_market/utils/packages.dart';
 class ProductRepository {
   final Dio _dio = Dio();
 
-  Future<List<Products>> getProducts() async {
-    final response = await _dio.get('https://dummyjson.com/products');
+  Future<List<Products>> getProducts(String query) async {
+    query = query.toLowerCase().replaceAll(' ', '+');
+    final response = await _dio
+        .get('https://dummyjson.com/products/search?q=$query?limit=0');
 
     // Check if response data is a Map
     if (response.data is Map<String, dynamic>) {

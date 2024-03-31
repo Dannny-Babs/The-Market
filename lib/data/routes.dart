@@ -5,7 +5,6 @@ import 'package:the_market/utils/screens.dart';
 class RouteGenerator {
   final StoreBloc storeBloc = StoreBloc();
   Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
 
     switch (settings.name) {
       case '/':
@@ -14,6 +13,8 @@ class RouteGenerator {
                 value: storeBloc, child: const HomeScreen()));
       case '/home':
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case '/search':
+        return MaterialPageRoute(builder: (_) => const SearchScreen());
       
 
       default:
@@ -24,28 +25,38 @@ class RouteGenerator {
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Error'),
-        ),
-        body: Center(
-            child: Column(
+        backgroundColor: Colors.white,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset('assets/images/error.png'),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Image.asset('lib/assets/error.jpg'),
+            ),
             const TextWidget(
-                text: 'ERROR',
-                size: 20,
-                fontWeight: FontWeight.w600,
-                color: AppColors.dark),
+              text: 'Sorry Try Again',
+              size: 24,
+              color: AppColors.dark,
+              fontWeight: FontWeight.bold,
+            ),
+            const SizedBox(height: 10),
+            const TextWidget(
+              text: 'An error occurred while loading the product',
+              maxLines: 2,
+              size: 20,
+              color: AppColors.dark,
+            ),
+            const SizedBox(height: 60),
             ButtonWidget(
                 onPressed: () {
-                  Navigator.of(_).pushNamed('/home');
+                  Navigator.pop(_);
                 },
-                color: AppColors.dark,
+                color: AppColors.primary,
                 textColor: AppColors.light,
-                text: 'Go back home'),
+                text: 'Try Again')
           ],
-        )),
+        ),
       );
     });
   }

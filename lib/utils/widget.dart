@@ -1,3 +1,4 @@
+
 import 'package:the_market/utils/packages.dart';
 
 import '../models/products.dart';
@@ -65,6 +66,14 @@ class SearchBarWidget extends StatelessWidget {
           Expanded(
             child: TextField(
               onChanged: onChanged,
+              onSubmitted: (value) {
+                Navigator.of(context).pushNamed('/search', arguments: value);
+              },
+              style: GoogleFonts.plusJakartaSans(
+                color: AppColors.dark,
+                fontSize: 17.5,
+                fontWeight: FontWeight.w500,
+              ),
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: GoogleFonts.plusJakartaSans(
@@ -94,7 +103,7 @@ class ButtonWidget extends StatelessWidget {
       this.textColor = AppColors.light,
       this.size = 20,
       this.fontWeight = FontWeight.w500,
-      this.width=  0.8,
+      this.width = 0.8,
       this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       this.borderRadius = 16});
 

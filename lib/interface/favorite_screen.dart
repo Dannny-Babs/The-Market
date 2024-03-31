@@ -11,10 +11,14 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
+  void initState() {
+    context.read<StoreBloc>().add(CategoryProductRequested ('all'));
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoreBloc, StoreState>(
       builder: (context, state) {
-
         final favoriteProducts = state.products
             .where((product) => state.favoriteIds.contains(product.id))
             .toList();
@@ -85,3 +89,4 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     );
   }
 }
+

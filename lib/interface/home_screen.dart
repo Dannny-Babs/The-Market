@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                     onChanged: (value) {},
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.035),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.001),
                 const AnnouncementCardWidget(),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                 FadeInUp(animate: true, child: const ProductsScreen()),
@@ -95,56 +95,11 @@ class AnnouncementCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        FadeInUp(
-          animate: true,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const TextWidget(
-                  text: 'Clearance\nSales',
-                  color: AppColors.light,
-                  fontWeight: FontWeight.w600,
-                  maxLines: 2,
-                  size: 34,
-                ),
-                const SizedBox(height: 24),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.light,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const TextWidget(
-                    text: 'Up to 50% off',
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w500,
-                    size: 16,
-                  ),
-                ),
-                const SizedBox(height: 8),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height * -0.038,
-          right: -40,
-          child: Image.asset(
-            'lib/assets/iphone.png',
-            width: MediaQuery.of(context).size.width * 0.83,
-          ),
-        )
-      ],
+    return FadeInUp(
+      child: Image.asset(
+        'lib/assets/announcement.png',
+        width: double.infinity,
+      ),
     );
   }
 }

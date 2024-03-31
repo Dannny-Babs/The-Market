@@ -7,8 +7,8 @@ class CategoryRepository {
   Future<List<Products>> showCategories(String categoryName) async {
     categoryName = categoryName.toLowerCase();
     final response = await _dio.get('https://dummyjson.com/products');
-    final categoryresponse =
-        await _dio.get('https://dummyjson.com/products/category/$categoryName');
+    final categoryresponse = await _dio
+        .get('https://dummyjson.com/products/category/$categoryName?limit=0');
     if (categoryName == 'all') {
       // Check if response data is a Map
       if (response.data is Map<String, dynamic>) {

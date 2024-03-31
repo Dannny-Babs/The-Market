@@ -46,6 +46,12 @@ class FavoriteRemoved extends StoreEvent {
   const FavoriteRemoved(this.productId);
 }
 
+class ProductSearch extends StoreEvent {
+  final String query;
+
+  const ProductSearch(this.query);
+}
+
 class TabChanged extends StoreEvent {
   final int index;
 
