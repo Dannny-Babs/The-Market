@@ -1,6 +1,5 @@
 // This file contains the model class for the product. It has the properties name, description, price, and image. It also has a factory constructor to convert the JSON data to a Product object.
 
-
 class Products {
   final String title;
   final int price;
@@ -53,7 +52,6 @@ class Product {
     required this.thumbnail,
     required this.images,
   });
-
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
@@ -66,7 +64,9 @@ class Product {
       brand: json['brand'],
       category: json['category'],
       thumbnail: json['thumbnail'],
-      images: List<String>.from(json['images']),
+      images: json['images'] != null
+          ? List<String>.from(json['images'].map((x) => x))
+          : [],
     );
   }
 }

@@ -76,7 +76,7 @@ class SearchBarWidget extends StatelessWidget {
             ),
           ),
           const Icon(
-            Ionicons.search_outline,
+            EneftyIcons.search_normal_outline,
             color: AppColors.dark,
           )
         ],
@@ -234,17 +234,18 @@ class ProductCard extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Icon(
-                    Ionicons.star,
-                    color: Color(0xFFE1AD12),
-                    size: 18,
+                    EneftyIcons.star_bold,
+                    color: Color(0xFFFCC00C),
+                    size: 16,
                   ),
-                  const SizedBox(width: 2),
+                  const SizedBox(width: 3),
                   TextWidget(
                     text: product.rating.toString(),
                     size: 16,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ],
               ),

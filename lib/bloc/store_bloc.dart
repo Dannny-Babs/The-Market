@@ -27,7 +27,6 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     emit(state.copyWith(productStatus: StoreRequest.loading));
     try {
       final product = await api.showProduct(event.productId);
-      print(product);
       emit(state.copyWith(
         productStatus: StoreRequest.success,
         product: product,

@@ -35,40 +35,17 @@ class ProductRepository {
 
   Future<List<Product>> showProduct(id) async {
     final response = await _dio.get('https://dummyjson.com/products/$id');
-    try {
-      if (response.statusCode == 200) {
-        if (response.data is Map<String, dynamic>) {
-          final responseData = response.data as Map<String, dynamic>;
 
-          final product = responseData['product'];
-
-          return (product as List)
-              .map((json) => Product(
-                    id: json['id'],
-                    title: json['title'],
-                    description: json['description'],
-                    price: json['price'],
-                    discountPercentage:
-                        (json['discountPercentage'] as num).toDouble(),
-                    rating: (json['rating'] as num).toDouble(),
-                    stock: json['stock'],
-                    brand: json['brand'],
-                    category: json['category'],
-                    thumbnail: json['thumbnail'],
-                    images: (json['images'] as List)
-                        .map((e) => e.toString())
-                        .toList(),
-                  ))
-              .toList();
-        } else {
-          throw Exception('Unexpected response format');
-        }
+    if (response.statusCode == 200) {
+      if (response.data is Map<String, dynamic>) {
+        final responseData = response.data as Map<String, dynamic>;
+        return [Product.fromJson(responseData)];
       } else {
-        throw Exception('Failed to load product');
+        throw Exception('Unexpected response format');
       }
-    } catch (e) {
-      print(e);
+    } else {
+      throw Exception('Failed to load product');
     }
-    return []; // Add this line to return an empty list if the function completes normally.
+    // Add this line to return an empty list if the function completes normally.
   }
 }
