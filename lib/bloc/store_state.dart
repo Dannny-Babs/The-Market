@@ -25,7 +25,7 @@ class StoreState {
     StoreRequest? productStatus,
     int? tabIndex,
     List<Products>? products,
-    List<Product>? product,
+    List<Product>?product,
     List<String>? categories,
     Set<int>? cartIds,
     Set<int>? favoriteIds,

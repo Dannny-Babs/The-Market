@@ -35,19 +35,40 @@ class ProductRepository {
 
   Future<List<Product>> showProduct(id) async {
     final response = await _dio.get('https://dummyjson.com/products/$id');
+    try {
+      if (response.statusCode == 200) {
+        if (response.data is Map<String, dynamic>) {
+          final responseData = response.data as Map<String, dynamic>;
 
-    // Check for successful response
-    if (response.statusCode == 200) {
-      // Parse the JSON data
-      final List jsonProducts = response.data as List;
+          final product = responseData['product'];
 
-      // Convert each JSON object to a Product object
-      return jsonProducts
-          .map((jsonProduct) => Product.fromJson(jsonProduct))
-          .toList();
-    } else {
-      // Handle error based on response code
-      throw Exception('Failed to load products: ${response.statusCode}');
+          return (product as List)
+              .map((json) => Product(
+                    id: json['id'],
+                    title: json['title'],
+                    description: json['description'],
+                    price: json['price'],
+                    discountPercentage:
+                        (json['discountPercentage'] as num).toDouble(),
+                    rating: (json['rating'] as num).toDouble(),
+                    stock: json['stock'],
+                    brand: json['brand'],
+                    category: json['category'],
+                    thumbnail: json['thumbnail'],
+                    images: (json['images'] as List)
+                        .map((e) => e.toString())
+                        .toList(),
+                  ))
+              .toList();
+        } else {
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        throw Exception('Failed to load product');
+      }
+    } catch (e) {
+      print(e);
     }
+    return []; // Add this line to return an empty list if the function completes normally.
   }
 }
