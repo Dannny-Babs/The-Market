@@ -3,7 +3,9 @@
         "categoryproducts",
         "categoryresponse",
         "Enefty",
+        "indexs",
         "productdetailinfo",
-        "productsreq"
+        "productsreq",
+        "searchquery"
     ]
 }

@@ -26,6 +26,6 @@ class MainApp extends StatelessWidget {
         ),
         initialRoute: '/',
         onGenerateRoute: RouteGenerator().generateRoute,
-        home:  BottomTabBar());
+        home: BottomTabBar());
   }
 }

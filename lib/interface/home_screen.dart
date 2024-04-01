@@ -2,6 +2,8 @@ import 'package:the_market/interface/product_views.dart';
 import 'package:the_market/utils/bloc.dart';
 import 'package:the_market/utils/packages.dart';
 
+import '../utils/screens.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -73,7 +75,14 @@ class HomeScreen extends StatelessWidget {
                   animate: true,
                   child: SearchBarWidget(
                     hintText: 'Search',
-                    onChanged: (value) {},
+                    onSubmitted: (value) {
+                      context.read<StoreBloc>().add(ProductSearch(value));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchScreen2(searchquery: value)),
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.001),

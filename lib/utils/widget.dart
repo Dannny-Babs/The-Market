@@ -1,4 +1,3 @@
-
 import 'package:the_market/utils/packages.dart';
 
 import '../models/products.dart';
@@ -44,12 +43,13 @@ class TextWidget extends StatelessWidget {
 
 class SearchBarWidget extends StatelessWidget {
   final String hintText;
-  final Function(String) onChanged;
+  final Function(String) onSubmitted;
 
   const SearchBarWidget({
     Key? key,
     required this.hintText,
-    required this.onChanged,
+    required this.onSubmitted,
+
   }) : super(key: key);
 
   @override
@@ -65,9 +65,9 @@ class SearchBarWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              onChanged: onChanged,
+             
               onSubmitted: (value) {
-                Navigator.of(context).pushNamed('/search', arguments: value);
+                onSubmitted(value);
               },
               style: GoogleFonts.plusJakartaSans(
                 color: AppColors.dark,

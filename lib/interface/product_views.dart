@@ -16,6 +16,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     super.initState();
     // Dispatch an event here to fetch initial products based on the selected category
+    
   }
 
   @override
