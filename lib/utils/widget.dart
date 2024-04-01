@@ -49,7 +49,6 @@ class SearchBarWidget extends StatelessWidget {
     Key? key,
     required this.hintText,
     required this.onSubmitted,
-
   }) : super(key: key);
 
   @override
@@ -65,7 +64,6 @@ class SearchBarWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-             
               onSubmitted: (value) {
                 onSubmitted(value);
               },
@@ -301,4 +299,137 @@ Widget productdetailinfo(String detail, Icon icon) {
       ],
     ),
   );
+}
+
+class CartProductCard extends StatefulWidget {
+  const CartProductCard({super.key});
+
+  @override
+  State<CartProductCard> createState() => _CartProductCardState();
+}
+
+class _CartProductCardState extends State<CartProductCard> {
+  int quantity = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.grey,
+            width: 1,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              height: 150,
+              width: 150,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColors.grey,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.network(
+                  'https://via.placeholder.com/150',
+                  fit: BoxFit.fitHeight,
+                ),
+              )),
+          const SizedBox(width: 8),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextWidget(
+                          text: 'Product Name',
+                          size: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        SizedBox(height: 5),
+                        TextWidget(
+                          text: 'Apple',
+                          size: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF8A8A8A),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 16),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        EneftyIcons.close_outline,
+                        color: Color(0xFF691D18),
+                        size: 28,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 60),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const TextWidget(
+                      text: '\$100',
+                      size: 28,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (quantity > 1) {
+                                quantity--;
+                              }
+                            });
+                          },
+                          icon: const Icon(EneftyIcons.minus_square_outline,
+                              size: 32),
+                        ),
+                        const SizedBox(width: 8),
+                        TextWidget(
+                          text: quantity.toString(),
+                          size: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          icon: const Icon(EneftyIcons.add_square_outline,
+                              size: 32, color: AppColors.primary),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

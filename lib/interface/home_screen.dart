@@ -25,38 +25,47 @@ class HomeScreen extends StatelessWidget {
               BlocBuilder<StoreBloc, StoreState>(
                 builder: (context, state) {
                   final cartCount = state.cartIds.length;
-                  return Stack(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: AppColors.grey),
-                        ),
-                        child: const Icon(
-                          EneftyIcons.bag_outline,
-                          color: AppColors.dark,
-                        ),
-                      ),
-                      if (cartCount > 0)
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              color: AppColors.primary,
-                              shape: BoxShape.circle,
-                            ),
-                            child: TextWidget(
-                              text: cartCount.toString(),
-                              color: AppColors.light,
-                              fontWeight: FontWeight.w500,
-                              size: 12,
-                            ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CartScreen()),
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: AppColors.grey),
+                          ),
+                          child: const Icon(
+                            EneftyIcons.bag_outline,
+                            color: AppColors.dark,
                           ),
                         ),
-                    ],
+                        if (cartCount > 0)
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                              ),
+                              child: TextWidget(
+                                text: cartCount.toString(),
+                                color: AppColors.light,
+                                fontWeight: FontWeight.w500,
+                                size: 12,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   );
                 },
               )
@@ -80,7 +89,8 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SearchScreen2(searchquery: value)),
+                            builder: (context) =>
+                                SearchScreen2(searchquery: value)),
                       );
                     },
                   ),
