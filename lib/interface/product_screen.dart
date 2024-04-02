@@ -42,10 +42,19 @@ class _ProductScreenState extends State<ProductScreen> {
           );
         }
         if (state.productStatus == StoreRequest.success) {
-          final product = state.product.first;
-          final inCart = state.cartIds.contains(product.id);
-          final inFavorite = state.favoriteIds.contains(product.id);
-          return buildProductScreen(inCart, inFavorite);
+          if (state.product.isNotEmpty) {
+            // Check if the list is not empty
+            final product = state.product.first;
+            final inCart = state.cartIds.contains(product.id);
+            final inFavorite = state.favoriteIds.contains(product.id);
+            return buildProductScreen(inCart, inFavorite);
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: Text('No products found'),
+              ),
+            );
+          }
         }
         return Scaffold(
           backgroundColor: Colors.white,

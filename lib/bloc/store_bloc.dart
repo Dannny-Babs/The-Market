@@ -15,6 +15,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     on<FavoriteRemoved>(_handleProductAddedToFavorite);
     on<FavoriteToggled>(_handleProductRemovedFromFavorite);
     on<ProductSearch>(_handleSearchProduct);
+    on<UpdateProductQuantity>(_handleUpdateProductQuantity);
   }
 
   final ProductRepository api = ProductRepository();
@@ -124,4 +125,18 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       emit(state.copyWith(productStatus: StoreRequest.error));
     }
   }
+
+  Future<void> _handleUpdateProductQuantity(
+    UpdateProductQuantity event,
+    Emitter<StoreState> emit,
+  ) async {
+    final updatedProducts = state.products
+        .map((product) => product.id.toString() == event.productId
+            ? product.copyWith(quantity: event.quantity)
+            : product)
+        .toList();
+
+    emit(state.copyWith(products: updatedProducts));
+  }
+
 }

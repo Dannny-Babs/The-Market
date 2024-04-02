@@ -57,3 +57,16 @@ class TabChanged extends StoreEvent {
 
   const TabChanged(this.index);
 }
+
+class UpdateProductQuantity extends StoreEvent{
+  final String productId;
+  final int quantity;
+
+  UpdateProductQuantity(this.productId, this.quantity);
+}
+
+class ProductTotalPriceRequested extends StoreEvent {
+  final String productId;
+
+  ProductTotalPriceRequested(this.productId);
+}

@@ -4,15 +4,19 @@ class Products {
   final String title;
   final int price;
   final String image;
+  final String brand;
   final int id;
   final double rating;
+  final int quantity ;
 
   const Products({
     required this.title,
     required this.price,
     required this.image,
+    required this.brand,
     required this.id,
     this.rating = 4.5,
+    this.quantity = 1,
   });
 
   factory Products.fromJson(Map<String, dynamic> json) {
@@ -20,8 +24,29 @@ class Products {
       title: json['title'],
       price: json['price'],
       image: json['image'],
+      brand: json['brand'],
       id: json['id'],
       rating: json['rating'],
+    );
+  }
+
+  Products copyWith({
+    String? title,
+    int? price,
+    String? image,
+    String? brand,
+    int? id,
+    double? rating,
+    int? quantity,
+  }) {
+    return Products(
+      title: title ?? this.title,
+      price: price ?? this.price,
+      image: image ?? this.image,
+      brand: brand ?? this.brand,
+      id: id ?? this.id,
+      rating: rating ?? this.rating,
+      quantity: quantity ?? this.quantity,
     );
   }
 }

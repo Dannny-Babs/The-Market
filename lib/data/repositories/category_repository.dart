@@ -1,4 +1,4 @@
-import 'package:the_market/models/products.dart';
+import 'package:the_market/data/models/products.dart';
 import 'package:the_market/utils/packages.dart';
 
 class CategoryRepository {
@@ -25,6 +25,7 @@ class CategoryRepository {
                   price: json['price'],
                   image: json['thumbnail'],
                   id: json['id'],
+                  brand: json['brand'],
                   rating: (json['rating'] as num).toDouble(),
                 ))
             .toList();
@@ -46,6 +47,7 @@ class CategoryRepository {
             .map((json) => Products(
                   title: json['title'],
                   price: json['price'],
+                  brand: json['brand'],                  
                   image: json['thumbnail'],
                   id: json['id'],
                   rating: (json['rating'] as num).toDouble(),

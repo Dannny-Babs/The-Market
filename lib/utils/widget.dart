@@ -1,6 +1,8 @@
+import 'package:the_market/utils/bloc.dart';
 import 'package:the_market/utils/packages.dart';
+import 'package:the_market/utils/screens.dart';
 
-import '../models/products.dart';
+import '../data/models/products.dart';
 
 class TextWidget extends StatelessWidget {
   final String text;
@@ -302,16 +304,18 @@ Widget productdetailinfo(String detail, Icon icon) {
 }
 
 class CartProductCard extends StatefulWidget {
-  const CartProductCard({super.key});
+  const CartProductCard({super.key, required this.product});
+  final Products product;
 
   @override
   State<CartProductCard> createState() => _CartProductCardState();
 }
 
 class _CartProductCardState extends State<CartProductCard> {
-  int quantity = 1;
   @override
   Widget build(BuildContext context) {
+    int totalPrice = widget.product.price * widget.product.quantity;
+    int quantity = widget.product.quantity;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: const BoxDecoration(
@@ -326,21 +330,33 @@ class _CartProductCardState extends State<CartProductCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-              height: 150,
-              width: 150,
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: AppColors.grey,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: Image.network(
-                  'https://via.placeholder.com/150',
-                  fit: BoxFit.fitHeight,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductScreen(
+                    productID: widget.product.id,
+                  ),
                 ),
-              )),
+              );
+            },
+            child: Container(
+                height: 150,
+                width: 150,
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppColors.grey,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: Image.network(
+                    widget.product.image,
+                    fit: BoxFit.fitHeight,
+                  ),
+                )),
+          ),
           const SizedBox(width: 8),
           Expanded(
             flex: 1,
@@ -352,27 +368,31 @@ class _CartProductCardState extends State<CartProductCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextWidget(
-                          text: 'Product Name',
+                          text: widget.product.title,
                           size: 20,
                           fontWeight: FontWeight.w700,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         TextWidget(
-                          text: 'Apple',
+                          text: widget.product.brand,
                           size: 16,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF8A8A8A),
+                          color: const Color(0xFF8A8A8A),
                         ),
                       ],
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        context
+                            .read<StoreBloc>()
+                            .add(ProductRemovedFromCart(widget.product.id));
+                      },
                       child: const Icon(
                         EneftyIcons.close_outline,
                         color: Color(0xFF691D18),
@@ -385,8 +405,8 @@ class _CartProductCardState extends State<CartProductCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const TextWidget(
-                      text: '\$100',
+                    TextWidget(
+                      text: '\$${totalPrice.toString()}',
                       size: 28,
                       fontWeight: FontWeight.w700,
                     ),
@@ -396,11 +416,14 @@ class _CartProductCardState extends State<CartProductCard> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              if (quantity > 1) {
+                            if (quantity > 1) {
+                              setState(() {
                                 quantity--;
-                              }
-                            });
+                              });
+                              context.read<StoreBloc>().add(
+                                  UpdateProductQuantity(
+                                      widget.product.id.toString(), quantity));
+                            }
                           },
                           icon: const Icon(EneftyIcons.minus_square_outline,
                               size: 32),
@@ -417,6 +440,10 @@ class _CartProductCardState extends State<CartProductCard> {
                             setState(() {
                               quantity++;
                             });
+                            context.read<StoreBloc>().add(UpdateProductQuantity(
+                                widget.product.id.toString(), quantity));
+
+                            print(quantity);
                           },
                           icon: const Icon(EneftyIcons.add_square_outline,
                               size: 32, color: AppColors.primary),

@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:the_market/models/products.dart';
+import 'package:the_market/data/models/products.dart';
 import 'package:the_market/utils/packages.dart';
 
 class ProductRepository {
@@ -26,6 +26,7 @@ class ProductRepository {
                 price: json['price'],
                 image: json['thumbnail'],
                 id: json['id'],
+                brand: json['brand'],
                 rating: (json['rating'] as num).toDouble(),
               ))
           .toList();

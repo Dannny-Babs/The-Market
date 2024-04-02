@@ -1,4 +1,4 @@
-import 'package:the_market/models/products.dart';
+import 'package:the_market/data/models/products.dart';
 import 'package:the_market/utils/bloc.dart';
 import 'package:the_market/utils/packages.dart';
 
