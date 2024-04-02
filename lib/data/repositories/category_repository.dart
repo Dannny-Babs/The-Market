@@ -6,7 +6,7 @@ class CategoryRepository {
 
   Future<List<Products>> showCategories(String categoryName) async {
     categoryName = categoryName.toLowerCase();
-    final response = await _dio.get('https://dummyjson.com/products');
+    final response = await _dio.get('https://dummyjson.com/products?limit=50');
     final categoryresponse = await _dio
         .get('https://dummyjson.com/products/category/$categoryName?limit=0');
     if (categoryName == 'all') {
@@ -47,7 +47,7 @@ class CategoryRepository {
             .map((json) => Products(
                   title: json['title'],
                   price: json['price'],
-                  brand: json['brand'],                  
+                  brand: json['brand'],
                   image: json['thumbnail'],
                   id: json['id'],
                   rating: (json['rating'] as num).toDouble(),

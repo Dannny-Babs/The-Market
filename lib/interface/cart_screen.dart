@@ -11,10 +11,10 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int quantity = 1;
+  int quantity = 1; double totalPrice = 0.0;
 
   double calculateTotalPrice(List<Products> products) {
-    double totalPrice = 0.0;
+   
     return totalPrice = products.fold(
         0.0,
         (previousValue, product) =>
