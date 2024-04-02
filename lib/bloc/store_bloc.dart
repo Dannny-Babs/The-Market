@@ -33,7 +33,6 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
         product: product,
       ));
     } catch (e) {
-      print(e.toString());
       emit(state.copyWith(productStatus: StoreRequest.error));
     }
   }

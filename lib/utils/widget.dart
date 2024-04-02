@@ -443,7 +443,6 @@ class _CartProductCardState extends State<CartProductCard> {
                             context.read<StoreBloc>().add(UpdateProductQuantity(
                                 widget.product.id.toString(), quantity));
 
-                            print(quantity);
                           },
                           icon: const Icon(EneftyIcons.add_square_outline,
                               size: 32, color: AppColors.primary),
