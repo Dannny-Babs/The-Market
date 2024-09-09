@@ -314,7 +314,7 @@ class CartProductCard extends StatefulWidget {
 class _CartProductCardState extends State<CartProductCard> {
   @override
   Widget build(BuildContext context) {
-    int totalPrice = widget.product.price * widget.product.quantity;
+    double totalPrice = widget.product.price * widget.product.quantity;
     int quantity = widget.product.quantity;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),

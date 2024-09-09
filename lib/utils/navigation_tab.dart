@@ -62,11 +62,11 @@ class BottomTabBar extends StatelessWidget {
               elevation: 0,
               type: BottomNavigationBarType.fixed,
               selectedLabelStyle: GoogleFonts.plusJakartaSans(
-                fontSize: 15,
+                fontSize:10,
                 fontWeight: FontWeight.w600,
               ),
               unselectedLabelStyle: GoogleFonts.plusJakartaSans(
-                fontSize: 13.5,
+                fontSize: 9,
                 fontWeight: FontWeight.w500,
               ),
               backgroundColor: Colors.white,

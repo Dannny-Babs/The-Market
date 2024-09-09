@@ -1,6 +1,6 @@
 class CategoryProducts {
   final String title;
-  final int price;
+  final double price;
   final String image;
   final int id;
   final double rating;
@@ -15,11 +15,11 @@ class CategoryProducts {
 
   factory CategoryProducts.fromJson(Map<String, dynamic> json) {
     return CategoryProducts(
-      title: json['title'],
-      price: json['price'],
-      image: json['image'],
-      id: json['id'],
-      rating: json['rating'],
+      title: json['title'] ?? 'Unknown Title', // Add null check
+      price: (json['price'] as num?)?.toDouble() ?? 0.0, // Add null check and cast to double
+      image: json['image'] ?? 'default_image.png', // Add null check
+      id: (json['id'] as num?)?.toInt() ?? 0, // Add null check and cast to int
+      rating: (json['rating'] as num?)?.toDouble() ?? 4.5, // Add null check and cast to double
     );
   }
 }

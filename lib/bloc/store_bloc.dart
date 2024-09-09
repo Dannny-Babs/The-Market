@@ -32,8 +32,10 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
         productStatus: StoreRequest.success,
         product: product,
       ));
+      print('Product: $product');
     } catch (e) {
       emit(state.copyWith(productStatus: StoreRequest.error));
+      print('Error: $e');
     }
   }
 
@@ -45,8 +47,11 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     try {
       final categories = await categoryApi.getCategories();
       emit(state.copyWith(categories: categories));
+      print('Categories: $categories');
     } catch (e) {
       emit(state.copyWith(productStatus: StoreRequest.error));
+      
+
     }
   }
 
@@ -63,6 +68,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       ));
     } catch (e) {
       emit(state.copyWith(productStatus: StoreRequest.error));
+  
     }
   }
 

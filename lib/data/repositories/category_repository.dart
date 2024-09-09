@@ -1,6 +1,5 @@
 import 'package:the_market/data/models/products.dart';
 import 'package:the_market/utils/packages.dart';
-
 class CategoryRepository {
   final Dio _dio = Dio();
 
@@ -21,17 +20,17 @@ class CategoryRepository {
         // Map productList to List<Products>
         return (productList as List)
             .map((json) => Products(
-                  title: json['title'],
-                  price: json['price'],
-                  image: json['thumbnail'],
-                  id: json['id'],
-                  brand: json['brand'],
-                  rating: (json['rating'] as num).toDouble(),
+                  title: json['title'] ?? 'Unknown Title', // Add null check
+                  price: json['price'] ?? 0.0, // Add null check
+                  image: json['thumbnail'] ?? 'default_image.png', // Add null check
+                  id: json['id'] ?? 0, // Add null check
+                  brand: json['brand'] ?? 'Unknown Brand', // Add null check
+                  rating: (json['rating'] as num?)?.toDouble() ?? 0.0, // Add null check
                 ))
             .toList();
       } else {
         // Handle error or unexpected response format
-        throw Exception('Unexpected response format');
+        throw Exception(response.data);
       }
     } else {
       // Check if response data is a Map
@@ -45,17 +44,17 @@ class CategoryRepository {
         // Map productList to List<Products>
         return (productList as List)
             .map((json) => Products(
-                  title: json['title'],
-                  price: json['price'],
-                  brand: json['brand'],
-                  image: json['thumbnail'],
-                  id: json['id'],
-                  rating: (json['rating'] as num).toDouble(),
+                  title: json['title'] ?? 'Unknown Title', // Add null check
+                  price: json['price'] ?? 0.0, // Add null check
+                  brand: json['brand'] ?? 'Unknown Brand', // Add null check
+                  image: json['thumbnail'] ?? 'default_image.png', // Add null check
+                  id: json['id'] ?? 0, // Add null check
+                  rating: (json['rating'] as num?)?.toDouble() ?? 0.0, // Add null check
                 ))
             .toList();
       } else {
         // Handle error or unexpected response format
-        throw Exception('Unexpected response format');
+         throw Exception(response.data);
       }
     }
   }

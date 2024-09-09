@@ -2,12 +2,12 @@
 
 class Products {
   final String title;
-  final int price;
+  final double price;
   final String image;
   final String brand;
   final int id;
   final double rating;
-  final int quantity ;
+  final int quantity;
 
   const Products({
     required this.title,
@@ -21,18 +21,18 @@ class Products {
 
   factory Products.fromJson(Map<String, dynamic> json) {
     return Products(
-      title: json['title'],
-      price: json['price'],
-      image: json['image'],
-      brand: json['brand'],
-      id: json['id'],
-      rating: json['rating'],
+      title: json['title'] ?? 'Unknown Title', // Add null check
+      price: (json['price'] as num?)?.toDouble() ?? 0.0, // Add null check and cast to double
+      image: json['image'] ?? 'default_image.png', // Add null check
+      brand: json['brand'] ?? 'Unknown Brand', // Add null check
+      id: (json['id'] as num?)?.toInt() ?? 0, // Add null check and cast to int
+      rating: (json['rating'] as num?)?.toDouble() ?? 4.5, // Add null check and cast to double
     );
   }
 
   Products copyWith({
     String? title,
-    int? price,
+    double? price,
     String? image,
     String? brand,
     int? id,
@@ -77,21 +77,22 @@ class Product {
     required this.thumbnail,
     required this.images,
   });
+
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      price: json['price'],
-      discountPercentage: json['discountPercentage'] * 1.00,
-      rating: json['rating'] * 1.00,
-      stock: json['stock'],
-      brand: json['brand'],
-      category: json['category'],
-      thumbnail: json['thumbnail'],
+      id: (json['id'] as num?)?.toInt() ?? 0, // Add null check and cast to int
+      title: json['title'] ?? 'Unknown Title', // Add null check
+      description: json['description'] ?? 'No Description', // Add null check
+      price: (json['price'] as num?)?.toInt() ?? 0, // Add null check and cast to int
+      discountPercentage: (json['discountPercentage'] as num?)?.toDouble() ?? 0.0, // Add null check and cast to double
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0, // Add null check and cast to double
+      stock: (json['stock'] as num?)?.toInt() ?? 0, // Add null check and cast to int
+      brand: json['brand'] ?? 'Unknown Brand', // Add null check
+      category: json['category'] ?? 'Unknown Category', // Add null check
+      thumbnail: json['thumbnail'] ?? 'default_image.png', // Add null check
       images: json['images'] != null
           ? List<String>.from(json['images'].map((x) => x))
-          : [],
+          : [], // Add null check
     );
   }
 }
